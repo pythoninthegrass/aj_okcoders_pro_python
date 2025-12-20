@@ -30,6 +30,8 @@ def get_latest_five_posts():
     
     read_posts_into_db(posts)
     
+    print('Latest five posts stored successfully in database!')
+    
 def read_posts_into_db(posts):
     posts_db = sqlite3.connect('hn_posts.db', isolation_level = None)
     cursor = posts_db.cursor()
