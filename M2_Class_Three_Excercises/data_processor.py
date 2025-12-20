@@ -28,7 +28,9 @@ def get_latest_five_posts():
 
     print('Latest five posts: ', posts)
     
-def read_posts_into_db():
+    read_posts_into_db(posts)
+    
+def read_posts_into_db(posts):
     posts_db = sqlite3.connect('hn_posts.db', isolation_level = None)
     cursor = posts_db.cursor()
 
@@ -41,6 +43,12 @@ def read_posts_into_db():
             posted_time INTEGER
         )
     ''')
+    
+    for post in posts:
+        cursor.execute('''
+            INSERT INTO latest_posts (title, link, posted_by, posted_time)
+            VALUES (?, ?, ?, ?)
+        ''', (post['title'], post['url'], post['by'], post['time']))
 
     posts_db.close()
 
